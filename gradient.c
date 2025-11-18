@@ -12,9 +12,8 @@ int main(int argc, char *argv[]) {
     int b =0;
     for(int i = 0; i<img->height; i++){
         for (int j = 0; j<img->width; j++){
-            image_set_pixel(img, i, j, 0,0,100);
+            image_set_pixel(img, j, i, 0, 0, b);            
             b++;
-            // printf("%d:%d rgb: %d %d %d\n",i,j,0,0,b);
         }
         b=0;
     }
