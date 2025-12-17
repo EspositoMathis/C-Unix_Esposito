@@ -13,14 +13,19 @@ typedef struct {
     int valeur;
     int multiplicateur;
     int index;
+    int result;
 } args_t;
 
 void* calcul_thread(void* arg) {
-        // cette fonction est appelé via pthread_create
-        // vous savez ce que représente @arg
-        // vous notifié au compilateur "cette" address dois être considéré comme args_t
+    // cette fonction est appelé via pthread_create
+    // vous savez ce que représente @arg
+    // vous notifié au compilateur "cette" address dois être considéré comme args_t
     args_t* args = (args_t*)arg;
-        // vous pouvez accéder (read/write) a toutes les variables via `args->`
+    // vous pouvez accéder (read/write) a toutes les variables via `args->`
+    for (int j = 0; j < args->multiplicateur; j++) {
+        args->result += args->valeur * args->valeur + args->valeur;
+        usleep(20);
+    }
 
     return NULL;
 }
@@ -39,31 +44,30 @@ int main(void) {
 
     // TODO: Créer et démarrer tous les threads
     for (int i=0; i<TAILLE_DONNEES; i++){
-        
-        args[i].index = DONNEES[i];
+
+        args[i].valeur = DONNEES[i];
         args[i].multiplicateur = MULTIPLICATEUR;
         args[i].index = i;
+        args[i].result = 0;
 
-        pthread_create(tab[i], NULL, calcul_thread, (void*)args[i]);
+        pthread_create(&(tab[i]), NULL, calcul_thread, &args[i]);
     }
 
-    // TODO : Créer tous les threads
     // TODO: Attendre tous les threads
-    int result[TAILLE_DONNEES];
-    int* r;
     for (int i=0; i<TAILLE_DONNEES; i++){
-        pthread_join(tab[i], (void*)r);
-        result[i] = *r ;
+        pthread_join(tab[i], NULL);
     }
     // TODO: Agréger les résultats
+    long int somme_total = 0;
     for (int i=0; i<TAILLE_DONNEES; i++){
-        
+        somme_total += args[i].result;
     }
+    
 
     clock_gettime(CLOCK_MONOTONIC, &fin);
     long duree = (fin.tv_sec - debut.tv_sec) * 1000 + 
                  (fin.tv_nsec - debut.tv_nsec) / 1000000;
-    long int somme_total = 0;
+
     printf("Résultat total : %ld\n", somme_total);
     printf("Durée : %ld ms\n", duree);
 
