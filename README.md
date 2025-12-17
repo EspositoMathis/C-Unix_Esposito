@@ -7,9 +7,10 @@
     1 000 000 : 861 376ms
 
 6) 4 coeurs
-7) Vu qu'on associe ube valeur par thread, 100 threads serait inutile il y en aurait que 10 utilisé 
+7) Vu qu'on associe une valeur par thread, 100 threads serait inutile il y en aurait que 10 utilisé 
 
 ----
 1) si on augmente le nombre de threads, il y aurait plus de race condition donc avec un seule thread le resultat serait correct car aucune race condition.
 2) changer le nombre d'itération ne changera pas le nombre d'erreur mais la difference (+ ou - grande).
-3) 
+3) Non
+

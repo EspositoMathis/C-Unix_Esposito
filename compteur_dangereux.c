@@ -5,7 +5,7 @@
 #define INCREMENT 11111111
 #define THREAD_COUNT 99
 
-static long long compteur_global = 0;  // Variable partagée MODIFIABLE et MODIFIÉ
+static long long compteur_global = 0;
 
 typedef struct {
     int index;
